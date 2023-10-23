@@ -12,7 +12,7 @@
 
 
 <body>
-    <div class = "mainTitle">
+    <div class = "main-title">
         <header>
             <h1>Jela svijeta</h1>
         </header>
