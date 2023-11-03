@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
 
         \App\Models\Dish::factory(10)->create();
-        \App\Models\Ingridient::factory(10)->create();
+        \App\Models\Ingredient::factory(10)->create();
 
         //\App\Models\User::factory(10)->create();
         // \App\Models\User::factory()->create([

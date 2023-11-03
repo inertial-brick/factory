@@ -10,9 +10,11 @@ class DishController extends Controller
 
     public function show($id)
     {
-        $dish = Dish::find($id); // Pretpostavljajući da koristite Eloquent model za jela (Dish)
+        $dish = Dish::findOrFail($id);
+        $ingredients = $dish->ingredients; // Dohvati sve sastojke povezane s ovim jelom
 
-        return view('dish', ['dish' => $dish]);
+        return view('dish', ['dish' => $dish, 'ingredients' => $ingredients]);
     }
+
 
 }

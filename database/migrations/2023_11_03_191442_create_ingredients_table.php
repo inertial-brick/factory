@@ -10,14 +10,21 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('ingridients', function (Blueprint $table) {
+        Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug');
             $table->unsignedBigInteger('dish_id');
             $table->timestamps();
-            $table->foreign('dish_id')->references('id')->on('dishes')->onDelete('cascade');
+            $table->foreign('dish_id')->references('id')->on('dishes')->onUpdate('cascade')->onDelete('cascade');
         });
+
+
+    }
+
+    public function dish()
+    {
+        return $this->belongsTo(Dish::class);
     }
 
     /**
@@ -25,6 +32,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('ingridients');
+        Schema::dropIfExists('ingredients');
     }
 };
