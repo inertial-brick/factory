@@ -15,9 +15,10 @@
 
 
     <article>
-        <h1><a href="/dish"></a>Moje prvo jelo </h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        <h1>{{ $dish->title }}</h1>
+        <p>{{ $dish->description }}</p>
     </article>
+
 
     <a href="/"> Go Back</a>
 </body>

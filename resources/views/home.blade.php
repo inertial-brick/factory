@@ -19,8 +19,10 @@
     </div>
 
     <article>
-        <h1><a href="/dish"> Moje prvo jelo</a> </h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        @foreach ($dishes as $dish)
+            <h1><a href="{{ route('dish.show', ['id' => $dish->id]) }}">{{ $dish->title }}</a></h1>
+            <p>{{ $dish->description }}</p>
+        @endforeach
     </article>
 </body>
 

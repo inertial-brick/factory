@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'App\Http\Controllers\HomeController@index');
 
-Route::get('dish', function () {
-    return view('dish');
-});
+
+Route::get('dish/{id}', 'App\Http\Controllers\DishController@show')->name('dish.show');
