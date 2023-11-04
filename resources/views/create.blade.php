@@ -33,4 +33,5 @@
         </div>
 
     </form>
+    <script src="{{ asset('js/functions.js') }}"></script>
 @endsection

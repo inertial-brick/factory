@@ -16,6 +16,7 @@
         </header>
     </div>
 
+
     <div class="content">
         @yield('content')
     </div>
@@ -23,7 +24,7 @@
     <footer>
 
     </footer>
-    <script src="{{ asset('js/functions.js') }}"></script>
+    
 </body>
 
 </html>
