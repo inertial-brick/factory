@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Dish;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class HomeController extends Controller
 {
@@ -25,6 +26,12 @@ class HomeController extends Controller
 
         $dishes = DB::table('dishes')->paginate($perPage);
 
-        return view('home', ['dishes' => $dishes, 'per_page' => $perPage]);
+        $meta = new stdClass();
+        $meta->itemsPerPage = $perPage;
+
+        return view('home', [
+            'data' => $dishes,
+            'meta' => $meta
+        ]);
     }
 }
