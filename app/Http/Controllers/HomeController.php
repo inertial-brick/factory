@@ -25,6 +25,6 @@ class HomeController extends Controller
 
         $dishes = DB::table('dishes')->paginate($perPage);
 
-        return view('home', ['dishes' => $dishes]);
+        return view('home', ['dishes' => $dishes, 'per_page' => $perPage]);
     }
 }
