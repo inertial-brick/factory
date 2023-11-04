@@ -13,25 +13,28 @@ class HomeController extends Controller
     {
         $perPage = $request->input('per_page', 5);
 
-        if (!$request->has('per_page')) {
-            $url = url()->current();
-
-            $query = $request->query();
-            $query['per_page'] = $perPage;
-
-            $url .= '?' . http_build_query($query);
-
-            return redirect($url);
-        }
-
         $dishes = DB::table('dishes')->paginate($perPage);
 
-        $meta = new stdClass();
-        $meta->itemsPerPage = $perPage;
+        $dishes->appends([
+            'per_page' => $perPage
+        ]);
 
+        $meta = new stdClass();
+        $meta->currentPage = $dishes->currentPage();
+        $meta->totalItems = $dishes->total();
+        $meta->itemsPerPage = $dishes->perPage();
+        $meta->totalPages = $dishes->lastPage();
+
+        $links = new stdClass();
+        $links->prev = $dishes->previousPageUrl();
+        $links->next = $dishes->nextPageUrl();
+        $links->self = $dishes->url($dishes->currentPage());
+
+        // TODO: how to redirect to self(current) page with params on load
         return view('home', [
             'data' => $dishes,
-            'meta' => $meta
+            'meta' => $meta,
+            'links' => $links,
         ]);
     }
 }

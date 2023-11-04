@@ -18,5 +18,13 @@
         <p>{{ $dish->description }}</p>
     @endforeach
 
+    <a href="{{ $links->prev }}">
+        <button {{ $links->prev ? '' : 'disabled' }}>Nazad</button>
+    </a>
+
+    <a href="{{ $links->next }}">
+        <button {{ $links->next ? '' : 'disabled' }}>Naprijed</button>
+    </a>
+
     <script src="{{ asset('js/home.functions.js') }}"></script>
 @endsection
