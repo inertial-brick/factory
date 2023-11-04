@@ -20,7 +20,6 @@ class DishFactory extends Factory
             'title' => $this->faker->sentence,
             'description' => $this->faker->sentence,
             'status' => $this->faker->randomElement(['created', 'not created ']),
-
         ];
     }
 }

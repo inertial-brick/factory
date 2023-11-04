@@ -8,18 +8,16 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up(): void // Treba bi many to many tablica, ingredients, dishes, ingredients_dishes
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->unsignedBigInteger('dish_id');
+            $table->unsignedBigInteger('dish_fk');
             $table->timestamps();
-            $table->foreign('dish_id')->references('id')->on('dishes')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('dish_fk')->references('id')->on('dishes')->onUpdate('cascade')->onDelete('cascade');
         });
-
-
     }
 
     public function dish()

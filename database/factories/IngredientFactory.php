@@ -17,11 +17,10 @@ class IngredientFactory extends Factory
      */
     public function definition(): array
     {
-        $randomDish = Dish::inRandomOrder()->first();
         return [
             'title' => $this->faker->word,
             'slug' => $this->faker->slug,
-            'dish_id' => $randomDish->id
+            'dish_id' => Dish::inRandomOrder()->first()
         ];
     }
 }

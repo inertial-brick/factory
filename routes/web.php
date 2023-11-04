@@ -21,6 +21,10 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::view('dish/create', 'create')->name('dish.create');
 
+Route::get('dish/{id}/edit', function ($id) {
+    return view('edit', ['dish' => Dish::findOrFail($id)]);
+})->name('dish.edit');
+
 Route::get('dish/{id}', 'App\Http\Controllers\DishController@show')->name('dish.show');
 
 Route::post('dish', function (request $request) {
