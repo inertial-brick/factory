@@ -15,7 +15,22 @@
         </div>
 
         <div>
+            <h2>Namirnice:</h2>
+            <div class="ingredients">
+                <div class="ingredient">
+                    <input type="text" name="ingredient_1" id="ingredient_1" placeholder="Naziv namirnice">
+                </div>
+
+                <!-- Dodajte koliko god želite polja za unos namirnica -->
+            </div>
+            <button type="button" id="addIngredient">Dodaj namirnicu</button>
+        </div>
+
+
+
+        <div>
             <button class="submit">Dodaj jelo</button>
         </div>
+
     </form>
 @endsection

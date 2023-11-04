@@ -2,6 +2,7 @@
 
 
 use App\Models\Dish;
+use App\Models\Ingredient;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -33,6 +34,20 @@ Route::post('dish', function (request $request) {
     $dish->description = $data['description'];
     $dish->status = 'created';
     $dish->save();
+
+
+    $ingredientKeys = array_filter(array_keys($request->all()), function ($key) {
+        return strpos($key, 'ingredient_') === 0;
+    });
+
+
+    foreach ($ingredientKeys as $key) {
+        $newIngredient = new Ingredient;
+        $newIngredient->dish_id = $dish->id;
+        $newIngredient->title = $request[$key];
+        $newIngredient->slug = 'nešto';
+        $newIngredient->save();
+    }
 
     return redirect()->route('home');
 
