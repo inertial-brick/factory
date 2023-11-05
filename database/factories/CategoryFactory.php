@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Meal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->randomElement(['Predjela', 'Glavna jela', 'Prilozi', 'Desert']),
+            'slug' => $this->faker->sentence,
+
         ];
     }
 }

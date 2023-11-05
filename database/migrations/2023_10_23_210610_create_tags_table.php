@@ -13,16 +13,16 @@ return new class extends Migration {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('slug');
-            $table->timestamps();
+            //$table->string('slug');
+            //$table->timestamps();
         });
 
         // Generirajte slugove za postojeće zapise u tablici
-        $tags = DB::table('tags')->get();
-        foreach ($tags as $tag) {
-            $slug = Str::slug($tag->title);
-            DB::table('tags')->where('id', $tag->id)->update(['slug' => $slug]);
-        }
+        //$tags = DB::table('tags')->get();
+        //foreach ($tags as $tag) {
+        //  $slug = Str::slug($tag->title);
+        // DB::table('tags')->where('id', $tag->id)->update(['slug' => $slug]);
+        // }
     }
 
     /**

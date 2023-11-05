@@ -14,15 +14,20 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('meals', function (Blueprint $table) {
-            $table->id(); // Dodajte auto-increment ključ "id" za svako jelo
-            $table->string('title'); // Dodajte stupac za naslov jela na hrvatskom jeziku
-            $table->text('description'); // Dodajte stupac za opis jela na hrvatskom jeziku
-            $table->string('status')->default('created'); // Dodajte stupac za status jela
+            $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->string('status')->default('created');
+            //$table->unsignedBigInteger('category_id');
+            //$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
-            // $table->unsignedBigInteger('category_id')->nullable(); // Dodajte stupac za ID kategorije jela
-            //$table->foreign('category_id')->references('id')->on('categories'); // Stvaranje veze s tablicom "categories"
+
+
 
         });
+
+
     }
 
 

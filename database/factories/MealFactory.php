@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,7 @@ class MealFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->sentence,
+            'category_id' => Category::inRandomOrder()->first(),
             'status' => $this->faker->randomElement(['created', 'not created ']),
         ];
     }
