@@ -6,8 +6,9 @@ use App\Models\Ingredient;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Dish extends Model
+class Meal extends Model
 {
     use HasFactory;
     protected $perPage = 5;
@@ -15,6 +16,15 @@ class Dish extends Model
     public function ingredients()
     {
         return $this->hasMany(Ingredient::class);
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
+    }
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 
 }

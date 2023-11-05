@@ -3,16 +3,16 @@
 @section('title', 'Ažuriraj jelo')
 
 @section('content')
-    <form method="POST" action="{{ route('dish.edit') }}">
+    <form method="POST" action="{{ route('meal.edit') }}">
         @csrf
         @method('PUT')
         <div>
             <label for="title">Title</label>
-            <input type="text" name="title" id="title" value="{{ $dish->title }}">
+            <input type="text" name="title" id="title" value="{{ $meal->title }}">
         </div>
         <div>
             <label for="description">Description</label>
-            <textarea name="description" id="description" rows="7" value="{{ $dish->description }}"></textarea>
+            <textarea name="description" id="description" rows="7" value="{{ $meal->description }}"></textarea>
         </div>
 
         <div>

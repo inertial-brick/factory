@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Models\Dish;
+use App\Models\Meal;
 use App\Models\Ingredient;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -19,25 +19,25 @@ use Illuminate\Http\Request;
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
-Route::view('dish/create', 'create')->name('dish.create');
+Route::view('meal/create', 'create')->name('meal.create');
 
-Route::get('dish/{id}/edit', function ($id) {
-    return view('edit', ['dish' => Dish::findOrFail($id)]);
-})->name('dish.edit');
+Route::get('meal/{id}/edit', function ($id) {
+    return view('edit', ['meal' => Meal::findOrFail($id)]);
+})->name('meal.edit');
 
-Route::get('dish/{id}', 'App\Http\Controllers\DishController@show')->name('dish.show');
+Route::get('meal/{id}', 'App\Http\Controllers\MealController@show')->name('meal.show');
 
-Route::post('dish', function (request $request) {
+Route::post('meal', function (request $request) {
     $data = $request->validate([
         'title' => 'required |max:25',
         'description' => 'required|max:255',
 
     ]);
-    $dish = new Dish;
-    $dish->title = $data['title'];
-    $dish->description = $data['description'];
-    $dish->status = 'created';
-    $dish->save();
+    $meal = new Meal;
+    $meal->title = $data['title'];
+    $meal->description = $data['description'];
+    $meal->status = 'created';
+    $meal->save();
 
 
     $ingredientKeys = array_filter(array_keys($request->all()), function ($key) {
@@ -47,7 +47,7 @@ Route::post('dish', function (request $request) {
 
     foreach ($ingredientKeys as $key) {
         $newIngredient = new Ingredient;
-        $newIngredient->dish_id = $dish->id;
+        $newIngredient->meal_id = $meal->id;
         $newIngredient->title = $request[$key];
         $newIngredient->slug = 'nešto';
         $newIngredient->save();
@@ -55,4 +55,4 @@ Route::post('dish', function (request $request) {
 
     return redirect()->route('home');
 
-})->name('dish.store');
+})->name('meal.store');

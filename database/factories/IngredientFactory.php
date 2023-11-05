@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Dish;
+use App\Models\Meal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +20,7 @@ class IngredientFactory extends Factory
         return [
             'title' => $this->faker->word,
             'slug' => $this->faker->slug,
-            'dish_id' => Dish::inRandomOrder()->first()
+            'meal_id' => Meal::inRandomOrder()->first()
         ];
     }
 }

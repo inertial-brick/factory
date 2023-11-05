@@ -11,8 +11,8 @@
 
 <body>
     <article>
-        <h1>{{ $dish->title }}</h1>
-        <p>{{ $dish->description }}</p>
+        <h1>{{ $meal->title }}</h1>
+        <p>{{ $meal->description }}</p>
         <h2>Sastojci:</h2>
         <ul>
             @foreach ($ingredients as $ingredient)

@@ -13,9 +13,9 @@
 
 
 @section('content')
-    @foreach ($data as $dish)
-        <h1><a href="{{ route('dish.show', ['id' => $dish->id]) }}">{{ $dish->title }}</a></h1>
-        <p>{{ $dish->description }}</p>
+    @foreach ($data as $meal)
+        <h1><a href="{{ route('meal.show', ['id' => $meal->id]) }}">{{ $meal->title }}</a></h1>
+        <p>{{ $meal->description }}</p>
     @endforeach
 
     <a href="{{ $links->prev }}">

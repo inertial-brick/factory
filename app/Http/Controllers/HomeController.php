@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Dish;
+use App\Models\Meal;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 
@@ -13,26 +13,26 @@ class HomeController extends Controller
     {
         $perPage = $request->input('per_page', 5);
 
-        $dishes = DB::table('dishes')->paginate($perPage);
+        $meals = DB::table('meals')->paginate($perPage);
 
-        $dishes->appends([
+        $meals->appends([
             'per_page' => $perPage
         ]);
 
         $meta = new stdClass();
-        $meta->currentPage = $dishes->currentPage();
-        $meta->totalItems = $dishes->total();
-        $meta->itemsPerPage = $dishes->perPage();
-        $meta->totalPages = $dishes->lastPage();
+        $meta->currentPage = $meals->currentPage();
+        $meta->totalItems = $meals->total();
+        $meta->itemsPerPage = $meals->perPage();
+        $meta->totalPages = $meals->lastPage();
 
         $links = new stdClass();
-        $links->prev = $dishes->previousPageUrl();
-        $links->next = $dishes->nextPageUrl();
-        $links->self = $dishes->url($dishes->currentPage());
+        $links->prev = $meals->previousPageUrl();
+        $links->next = $meals->nextPageUrl();
+        $links->self = $meals->url($meals->currentPage());
 
         // TODO: how to redirect to self(current) page with params on load
         return view('home', [
-            'data' => $dishes,
+            'data' => $meals,
             'meta' => $meta,
             'links' => $links,
         ]);

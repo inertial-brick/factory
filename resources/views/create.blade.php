@@ -3,7 +3,7 @@
 @section('title', 'Dodaj jelo')
 
 @section('content')
-    <form method="POST" action="{{ route('dish.store') }}">
+    <form method="POST" action="{{ route('meal.store') }}">
         @csrf
         <div>
             <label for="title">Title</label>
