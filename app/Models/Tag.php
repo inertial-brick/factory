@@ -11,8 +11,8 @@ class Tag extends Model
     use HasFactory;
 
 
-    //public function meals(): BelongsToMany
-    //{
-      //  return $this->belongsToMany(Meal::class);
-    //}
+    public function meals(): BelongsToMany
+    {
+        return $this->belongsToMany(Meal::class, 'meals_tags');
+    }
 }

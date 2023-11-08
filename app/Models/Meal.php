@@ -22,4 +22,12 @@ class Meal extends Model
             'ingredients_meals',
         );
     }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Tag::class,
+            'meals_tags',
+        );
+    }
 }

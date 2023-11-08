@@ -18,7 +18,7 @@ class IngredientFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->word,
+            'title' => $this->faker->word(),
         ];
     }
 }

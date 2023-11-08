@@ -18,8 +18,8 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->randomElement(['Predjela', 'Glavna jela', 'Prilozi', 'Deserti']),
-            'slug' => $this->faker->sentence,
+            'title' => $this->faker->randomElement(['Predjela', 'Glavna jela', 'Prilozi', 'Deserti', 'Pileće predjelo', 'Riba', 'Povrće iz rerne', 'Pire krompir', 'Čokoladna torta', 'Supa', 'Salata', 'Špagete', 'Piletina sa povrćem', 'Tiramisu', 'Pizza', 'Kuvano povrće', 'Knedle sa šljivama', 'Losos', 'Cheesecake']),
+            'slug' => $this->faker->word(),
         ];
     }
 }
