@@ -20,7 +20,7 @@ class Meal extends Model
         return $this->belongsToMany(
             Ingredient::class,
             'ingredients_meals',
-        );
+        )->withTimestamps();
     }
 
     public function tags(): BelongsToMany
@@ -28,6 +28,6 @@ class Meal extends Model
         return $this->belongsToMany(
             Tag::class,
             'meals_tags',
-        );
+        )->withTimestamps();
     }
 }

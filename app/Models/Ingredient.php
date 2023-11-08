@@ -16,6 +16,6 @@ class Ingredient extends Model
         return $this->belongsToMany(
             Meal::class,
             'ingredients_meals',
-        );
+        )->withTimestamps();
     }
 }
