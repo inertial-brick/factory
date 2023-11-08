@@ -14,23 +14,12 @@ class Meal extends Model
 {
     use HasFactory;
     protected $perPage = 5;
-    protected $table = 'meals';
 
-
-
-    public function category(): BelongsTo
+    public function ingredients(): BelongsToMany
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(
+            Ingredient::class,
+            'ingredients_meals',
+        );
     }
-
-    // public function ingredients(): BelongsToMany
-    //{
-    //  return $this->belongsToMany(
-    //    Ingredient::class,
-    //  'ingredient_tag_category_meal'
-
-    //);
-    //}
-
-
 }
