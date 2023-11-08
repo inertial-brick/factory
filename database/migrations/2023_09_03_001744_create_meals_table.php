@@ -18,24 +18,9 @@ return new class extends Migration {
             $table->string('title');
             $table->text('description');
             $table->string('status')->default('created');
-            //$table->unsignedBigInteger('category_id');
-            //$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreignId('category_id')->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
-
-
-
+            $table->unsignedBigInteger('category_fk');
+            $table->foreign('category_fk')->references('id')->on('categories');
         });
-
-
-    }
-
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('meals');
     }
 };
