@@ -12,10 +12,10 @@ return new class extends Migration {
     {
         Schema::create('ingredients_meals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('meal_fk');
-            $table->unsignedBigInteger('ingredient_fk');
-            $table->foreign('meal_fk')->references('id')->on('meals');
-            $table->foreign('ingredient_fk')->references('id')->on('ingredients');
+            $table->unsignedBigInteger('meal_id');
+            $table->unsignedBigInteger('ingredient_id');
+            $table->foreign('meal_id')->references('id')->on('meals');
+            $table->foreign('ingredient_id')->references('id')->on('ingredients');
             $table->timestamps();
         });
     }

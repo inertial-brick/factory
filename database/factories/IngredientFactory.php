@@ -19,8 +19,6 @@ class IngredientFactory extends Factory
     {
         return [
             'title' => $this->faker->word,
-            'slug' => $this->faker->slug,
-            'meal_id' => Meal::inRandomOrder()->first()
         ];
     }
 }

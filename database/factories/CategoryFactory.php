@@ -18,9 +18,8 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->randomElement(['Predjela', 'Glavna jela', 'Prilozi', 'Desert']),
+            'title' => $this->faker->randomElement(['Predjela', 'Glavna jela', 'Prilozi', 'Deserti']),
             'slug' => $this->faker->sentence,
-
         ];
     }
 }

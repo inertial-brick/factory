@@ -19,8 +19,8 @@ return new class extends Migration {
             $table->text('description');
             $table->string('status')->default('created');
             $table->timestamps();
-            $table->unsignedBigInteger('category_fk');
-            $table->foreign('category_fk')->references('id')->on('categories');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 };

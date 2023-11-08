@@ -21,7 +21,7 @@ class MealFactory extends Factory
             'title' => $this->faker->sentence,
             'description' => $this->faker->sentence,
             'category_id' => Category::inRandomOrder()->first(),
-            'status' => $this->faker->randomElement(['created', 'not created ']),
+            'status' => $this->faker->randomElement(['created', 'not created']),
         ];
     }
 }

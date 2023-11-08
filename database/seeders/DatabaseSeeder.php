@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
+use App\Models\Ingredient;
+use App\Models\Meal;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,15 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Category::factory(50)->create();
-        \App\Models\Meal::factory(50)->create();
-
-        // \App\Models\Ingredient::factory(50)->create();
-        //\App\Models\ingredient_tag_category_meal::factory(50)->create();
-        //\App\Models\User::factory(10)->create();
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Category::factory(50)->create();
+        Meal::factory(50)->has(Ingredient::factory()->count(3))->create();
     }
 }
