@@ -15,6 +15,10 @@ class Meal extends Model
     use HasFactory;
     protected $perPage = 5;
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
     public function ingredients(): BelongsToMany
     {
         return $this->belongsToMany(

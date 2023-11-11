@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Meal;
 use Illuminate\Support\Facades\DB;
@@ -12,8 +13,11 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 5);
+        $category_id = $request->input('category_id', null);
 
-        $meals = DB::table('meals')->paginate($perPage);
+        $meals = Meal::with('category')
+            ->where('category_id', $category_id)
+            ->paginate($perPage);
 
         $meals->appends([
             'per_page' => $perPage
@@ -30,11 +34,14 @@ class HomeController extends Controller
         $links->next = $meals->nextPageUrl();
         $links->self = $meals->url($meals->currentPage());
 
+        $categories = Category::all();
+
         // TODO: how to redirect to self(current) page with params on load
         return view('home', [
             'data' => $meals,
             'meta' => $meta,
             'links' => $links,
+            'categories' => $categories,
         ]);
     }
 }

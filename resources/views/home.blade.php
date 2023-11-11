@@ -11,12 +11,24 @@
     <option value="25" @if ($meta->itemsPerPage == '25') selected @endif>25</option>
 </select>
 
+<select id="category">
+    @foreach ($categories as $category)
+        {
+        <option value="{{ $category->id }}">{{ $category->title }}</option>
+        }
+    @endforeach
+</select>
+
 
 @section('content')
-    @foreach ($data as $meal)
-        <h1><a href="{{ route('meal.show', ['id' => $meal->id]) }}">{{ $meal->title }}</a></h1>
-        <p>{{ $meal->description }}</p>
-    @endforeach
+    <div id="mealsContainer">
+        @foreach ($data as $meal)
+            <div class="meal" data-category="{{ $meal->category->title ?: 'Uncategorized' }}">
+                <h1><a href="{{ route('meal.show', ['id' => $meal->id]) }}">{{ $meal->title }}</a></h1>
+                <p>{{ $meal->description }}</p>
+            </div>
+        @endforeach
+    </div>
 
     <a href="{{ $links->prev }}">
         <button {{ $links->prev ? '' : 'disabled' }}>Nazad</button>

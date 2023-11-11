@@ -31,7 +31,6 @@ Route::post('meal', function (request $request) {
     $data = $request->validate([
         'title' => 'required |max:25',
         'description' => 'required|max:255',
-
     ]);
     $meal = new Meal;
     $meal->title = $data['title'];

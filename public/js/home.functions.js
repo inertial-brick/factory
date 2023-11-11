@@ -7,3 +7,13 @@ perPageSelect.addEventListener("change", (event) => {
 
     window.location.href = url;
 });
+
+const categorySelect = document.getElementById("category");
+
+categorySelect.addEventListener("change", (event) => {
+    const url = new URL(window.location.href);
+
+    url.searchParams.set("category_id", event.target.value);
+
+    window.location.href = url;
+});
