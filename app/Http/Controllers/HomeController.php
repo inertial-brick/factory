@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 use App\Models\Meal;
 use Illuminate\Support\Facades\DB;
@@ -15,8 +16,12 @@ class HomeController extends Controller
         $perPage = $request->input('per_page', 5);
         $category_id = $request->input('category_id', null);
 
-        $meals = Meal::with('category')
-            ->where('category_id', $category_id)
+        $meals = Meal::with("category")
+            ->orWhere(function (Builder $query) use ($category_id) {
+                if ($category_id) {
+                    $query->where("category_id", $category_id);
+                }
+            })
             ->paginate($perPage);
 
         $meals->appends([
@@ -36,7 +41,6 @@ class HomeController extends Controller
 
         $categories = Category::all();
 
-        // TODO: how to redirect to self(current) page with params on load
         return view('home', [
             'data' => $meals,
             'meta' => $meta,

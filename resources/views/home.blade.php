@@ -12,13 +12,17 @@
 </select>
 
 <select id="category">
+    <option disabled selected value> -- Odaberite Kategoriju -- </option>
     @foreach ($categories as $category)
         {
-        <option value="{{ $category->id }}">{{ $category->title }}</option>
+        <option value="{{ $category->id }}" @if (app('request')->input('category_id') == $category->id) selected @endif>
+            {{ $category->title }}
+        </option>
         }
     @endforeach
 </select>
 
+<button id="clear-category">Očisti kategoriju</button>
 
 @section('content')
     <div id="mealsContainer">
