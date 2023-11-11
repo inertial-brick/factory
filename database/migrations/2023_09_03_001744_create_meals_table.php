@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->text('description');
             $table->string('status')->default('created');
             $table->timestamps();
-            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
         });
     }

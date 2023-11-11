@@ -13,6 +13,8 @@
 
 <select id="category">
     <option disabled selected value> -- Odaberite Kategoriju -- </option>
+    <option value="with-category" @if (app('request')->input('category_id') == 'with-category') selected @endif> Sa Kategorijom </option>
+    <option value="no-category"@if (app('request')->input('category_id') == 'no-category') selected @endif> Bez Kategorije </option>
     @foreach ($categories as $category)
         {
         <option value="{{ $category->id }}" @if (app('request')->input('category_id') == $category->id) selected @endif>
@@ -25,9 +27,9 @@
 <button id="clear-category">Očisti kategoriju</button>
 
 @section('content')
-    <div id="mealsContainer">
+    <div>
         @foreach ($data as $meal)
-            <div class="meal" data-category="{{ $meal->category->title ?: 'Uncategorized' }}">
+            <div>
                 <h1><a href="{{ route('meal.show', ['id' => $meal->id]) }}">{{ $meal->title }}</a></h1>
                 <p>{{ $meal->description }}</p>
             </div>

@@ -23,8 +23,10 @@ class MealFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'description' => $this->faker->sentence(),
-            // TODO: can be null
-            'category_id' => Category::inRandomOrder()->first(),
+            'category_id' => $this->faker->randomElement([
+                Category::inRandomOrder()->first(),
+                null
+            ]),
             'status' => $this->faker->randomElement(['created', 'not created']),
         ];
     }

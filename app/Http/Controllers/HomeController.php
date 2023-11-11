@@ -18,8 +18,22 @@ class HomeController extends Controller
 
         $meals = Meal::with("category")
             ->orWhere(function (Builder $query) use ($category_id) {
+                if ($category_id == 'with-category') {
+                    $query->whereNotNull("category_id");
+
+                    return;
+                }
+
+                if ($category_id == 'no-category') {
+                    $query->whereNull("category_id");
+
+                    return;
+                }
+
                 if ($category_id) {
                     $query->where("category_id", $category_id);
+
+                    return;
                 }
             })
             ->paginate($perPage);
