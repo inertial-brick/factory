@@ -16,7 +16,7 @@ class HomeController extends Controller
         $perPage = $request->input('per_page', 5);
         $category_id = $request->input('category_id', null);
 
-        $meals = Meal::with("category")
+        $meals = Meal::with(['category', 'ingredients', 'tags'])
             ->orWhere(function (Builder $query) use ($category_id) {
                 if ($category_id == 'with-category') {
                     $query->whereNotNull("category_id");
@@ -42,6 +42,7 @@ class HomeController extends Controller
             'per_page' => $perPage
         ]);
 
+        /*   */
         $meta = new stdClass();
         $meta->currentPage = $meals->currentPage();
         $meta->totalItems = $meals->total();
@@ -54,7 +55,7 @@ class HomeController extends Controller
         $links->self = $meals->url($meals->currentPage());
 
         $categories = Category::all();
-
+        /*  dd($meals); */
         return view('home', [
             'data' => $meals,
             'meta' => $meta,

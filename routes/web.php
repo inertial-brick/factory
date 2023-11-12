@@ -55,3 +55,5 @@ Route::post('meal', function (request $request) {
     return redirect()->route('home');
 
 })->name('meal.store');
+
+
