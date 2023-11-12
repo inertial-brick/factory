@@ -18,7 +18,6 @@ class LanguageFactory extends Factory
     {
         return [
             'language' => $this->faker->randomElement(['']),
-
         ];
     }
 }
