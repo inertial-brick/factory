@@ -42,7 +42,6 @@ class HomeController extends Controller
             'per_page' => $perPage
         ]);
 
-        /*   */
         $meta = new stdClass();
         $meta->currentPage = $meals->currentPage();
         $meta->totalItems = $meals->total();
@@ -55,7 +54,6 @@ class HomeController extends Controller
         $links->self = $meals->url($meals->currentPage());
 
         $categories = Category::all();
-        /*  dd($meals); */
         return view('home', [
             'data' => $meals,
             'meta' => $meta,
