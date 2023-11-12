@@ -20,7 +20,7 @@
             @endforeach
         </ul>
     </article>
-    <a href="home">Idi nazad</a>
+    <a href='/'>Idi nazad</a>
 </body>
 
 </html>

@@ -2,19 +2,16 @@
 
 namespace App\Models;
 
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Tag extends Model implements TranslatableContract
+class Tag extends Model
 {
-    use HasFactory, Translatable;
+    use HasFactory;
 
-
-    public $translatedAttributes = ['title', 'slug'];
-    protected $fillable = ['title', 'slug'];
+    protected $fillable = ['title'];
     public function meals(): BelongsToMany
     {
         return $this->belongsToMany(Meal::class, 'meals_tags')->withTimestamps();

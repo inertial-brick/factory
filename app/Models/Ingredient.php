@@ -2,20 +2,16 @@
 
 namespace App\Models;
 
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
+
 use App\Models\Meal;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Ingredient extends Model implements TranslatableContract
+class Ingredient extends Model
 {
-    use HasFactory, Translatable;
+    use HasFactory;
 
-
-
-    public $translatedAttributes = ['title'];
     protected $fillable = ['title'];
 
 

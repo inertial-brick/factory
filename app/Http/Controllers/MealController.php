@@ -11,7 +11,7 @@ class MealController extends Controller
     public function show($id)
     {
         $meal = Meal::findOrFail($id);
-        $ingredients = $meal->ingredients; // Dohvati sve sastojke povezane s ovim jelom
+        $ingredients = $meal->ingredients;
 
         return view('meal', ['meal' => $meal, 'ingredients' => $ingredients]);
     }
