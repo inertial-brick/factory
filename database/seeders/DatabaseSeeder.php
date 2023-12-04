@@ -14,10 +14,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        Category::factory(10)->create();
-        Ingredient::factory(50)->create();
-        Tag::factory(50)->create();
-        Meal::factory(50)->create();
+        Category::factory(5)->create();
+        Ingredient::factory(5)->create();
+        Tag::factory(5)->create();
+        Meal::factory(5)->create();
 
         Language::create([
             "language" => "hr"

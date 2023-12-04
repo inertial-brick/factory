@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MealController;
 use App\Models\Meal;
 use App\Models\Ingredient;
 use Illuminate\Support\Facades\Route;
@@ -17,11 +19,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
+/* Route::resource('/meals', [HomeController::class, 'index'])->name('home'); */
+Route::resource('/meals', MealController::class);
 
+Route::get('/meals/{id}', [MealController::class, 'show'])->name('meal.show');
 
-Route::get('meal/{id}', 'App\Http\Controllers\MealController@show')->name('meal.show');
 
 
 

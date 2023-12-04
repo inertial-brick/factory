@@ -55,11 +55,65 @@ class HomeController extends Controller
 
         $categories = Category::all();
 
-        return view('home', [
+        return view(
+            'home',
+            compact(
+                'meals',
+                'meta',
+                'categories',
+            )
+        );
+    }
+
+    public function show(Request $request)
+    {
+        $perPage = $request->input('per_page', 5);
+        $category_id = $request->input('category_id', null);
+
+        $meals = Meal::with(['category', 'ingredients', 'tags'])
+            ->orWhere(function (Builder $query) use ($category_id) {
+                if ($category_id == 'with-category') {
+                    $query->whereNotNull("category_id");
+
+                    return;
+                }
+
+                if ($category_id == 'no-category') {
+                    $query->whereNull("category_id");
+
+                    return;
+                }
+
+                if ($category_id) {
+                    $query->where("category_id", $category_id);
+
+                    return;
+                }
+            })
+            ->paginate($perPage);
+
+        $meals->appends([
+            'per_page' => $perPage
+        ]);
+
+        $meta = new stdClass();
+        $meta->currentPage = $meals->currentPage();
+        $meta->totalItems = $meals->total();
+        $meta->itemsPerPage = $meals->perPage();
+        $meta->totalPages = $meals->lastPage();
+
+        $links = new stdClass();
+        $links->prev = $meals->previousPageUrl();
+        $links->next = $meals->nextPageUrl();
+        $links->self = $meals->url($meals->currentPage());
+
+        $categories = Category::all();
+
+        return view('home', compact([
             'data' => $meals,
             'meta' => $meta,
             'links' => $links,
             'categories' => $categories,
-        ]);
+        ]));
     }
 }

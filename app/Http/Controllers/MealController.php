@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MealResource;
+use App\Http\Resources\MealCollection;
+
 use Illuminate\Http\Request;
 use App\Models\Meal;
 
 class MealController extends Controller
 {
-
-    public function show($id)
+    public function index()
     {
-        $meal = Meal::findOrFail($id);
-        $ingredients = $meal->ingredients;
+        $meals = Meal::with(['category', 'tags', 'ingredients'])->paginate();
+        $mealCollection = new MealCollection($meals);
 
-        return view('meal', ['meal' => $meal, 'ingredients' => $ingredients]);
+        return view('home', ['meals' => $mealCollection]);
+    }
+
+    public function show(Meal $meal)
+    {
+        $meal->load('category', 'tags', 'ingredients');
+        return new MealResource($meal);
     }
 
 

@@ -37,7 +37,7 @@ class MealFactory extends Factory
     {
         return $this
             ->afterCreating(function (Meal $meal) {
-                $meal->ingredients()->attach(Ingredient::all()->random(7));
+                $meal->ingredients()->attach(Ingredient::all()->random(5));
             })
             ->afterCreating(function (Meal $meal) {
                 $meal->tags()->attach(Tag::all()->random(3));
