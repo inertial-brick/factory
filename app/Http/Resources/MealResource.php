@@ -23,7 +23,6 @@ class MealResource extends JsonResource
             'category' => new CategoryResource($this->whenLoaded('category')),
             'tags' => new TagResource($this->whenLoaded('tags')),
             'ingredients' => new IngredientResource($this->whenLoaded('ingredients')),
-
         ];
     }
 }
