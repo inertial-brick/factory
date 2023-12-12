@@ -1,4 +1,4 @@
-@extends('layouts')
+@extends('layout')
 @section('title', 'Jela svijeta')
 
 @section('content')

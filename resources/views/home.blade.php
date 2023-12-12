@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layout')
 
 @section('title', 'Jela svijeta')
 
@@ -30,7 +30,7 @@
                 <h1><a href="{{ route('meal.show', ['id' => $meal->id]) }}">{{ $meal->title }}</a></h1>
                 <p>{{ $meal->description }}</p>
 
-                <p>Category: {{ $meal->category->title }}</p>
+                <p>Category: {{ optional($meal->category)->title }}</p>
 
                 <p>Tags:
                     @foreach ($meal->tags as $tag)
@@ -58,4 +58,36 @@
     </a>
 
     <script src="{{ asset('js/home.functions.js') }}"></script>
+@endsection
+
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <h1>Meals</h1>
+
+        @foreach ($mealCollection as $meal)
+            <div class="meal">
+                <h2>{{ $meal->title }}</h2>
+                <p>Category: {{ $meal->category->title }}</p>
+
+                <p>Tags:
+                    @foreach ($meal->tags as $tag)
+                        {{ $tag->name }}{{ !$loop->last ? ', ' : '' }}
+                    @endforeach
+                </p>
+
+                <p>Ingredients:
+                    @foreach ($meal->ingredients as $ingredient)
+                        {{ $ingredient->name }}{{ !$loop->last ? ', ' : '' }}
+                    @endforeach
+                </p>
+
+                <hr>
+            </div>
+        @endforeach
+
+        {{ $mealCollection->links() }}
+
+    </div>
 @endsection
