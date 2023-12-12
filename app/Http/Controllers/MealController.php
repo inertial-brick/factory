@@ -12,10 +12,11 @@ class MealController extends Controller
 {
     public function index()
     {
-        $meals = Meal::with(['category', 'tags', 'ingredients'])->paginate();
-        $mealCollection = new MealCollection($meals);
+        $meals = Meal::with(['category', 'tags', 'ingredients'])->paginate(5);
+        return $mealCollection = new MealCollection($meals);
+        /*  return response()->json($mealCollection); */
 
-        return view('home', ['meals' => $mealCollection]);
+        /* return view('home', ['meals' => $mealCollection]); */
     }
 
     public function show(Meal $meal)
@@ -23,6 +24,5 @@ class MealController extends Controller
         $meal->load('category', 'tags', 'ingredients');
         return new MealResource($meal);
     }
-
 
 }
