@@ -26,9 +26,6 @@ use Illuminate\Support\Facades\Route;
 }); */
 
 
-Route::get("list", 'App\Http\Controllers\HomeController@index');
-
-
 Route::group(['dishes'], function () {
     Route::apiResource('meals', MealController::class);
     Route::apiResource('categories', CategoryController::class);
