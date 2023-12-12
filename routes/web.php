@@ -3,10 +3,13 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MealController;
+use App\Http\Resources\MealCollection;
+use App\Http\Resources\MealResource;
 use App\Models\Meal;
 use App\Models\Ingredient;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +22,15 @@ use Illuminate\Http\Request;
 |
 */
 
+/* Route::get('/', [ApiController::class, 'fetchData']); */
 
 /* Route::resource('/meals', [HomeController::class, 'index'])->name('home'); */
-Route::resource('/meals', MealController::class);
+/* Route::get('/', [MealController::class, 'index'])->name('home'); */
 
-Route::get('/meals/{id}', [MealController::class, 'show'])->name('meal.show');
+Route::get('/', [MealController::class, 'index'])->name('home');
+
+
+/* Route::get('/meals/{id}', [MealController::class, 'show'])->name('meal.show'); */
 
 
 
