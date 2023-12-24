@@ -27,7 +27,7 @@ class MealFactory extends Factory
                 Category::inRandomOrder()->first(),
                 null
             ]),
-            'status' => $this->faker->randomElement(['created', 'not created']),
+            'status' => 'created',
         ];
     }
     /**
