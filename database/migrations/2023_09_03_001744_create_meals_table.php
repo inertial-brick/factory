@@ -15,12 +15,14 @@ return new class extends Migration {
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->default('');
-            $table->text('description')->default('');
-            $table->string('status')->default('created');
+            $table->string('title');
+            $table->text('description');
+            $table->string('status');
             $table->timestamps();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
         });
+
     }
+
 };
