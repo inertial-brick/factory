@@ -25,10 +25,8 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 }); */
 
-
-Route::group(['dishes'], function () {
-    Route::apiResource('meals', MealController::class);
-    Route::apiResource('categories', CategoryController::class);
-    Route::apiResource('tags', TagController::class);
-    Route::apiResource('ingredients', IngredientController::class);
-});
+Route::apiResource('meals', MealController::class);
+Route::put('meals/restore/{meal}', [MealController::class, 'restore'])->name('meals.restore');
+Route::apiResource('categories', CategoryController::class);
+Route::apiResource('tags', TagController::class);
+Route::apiResource('ingredients', IngredientController::class);

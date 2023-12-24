@@ -22,15 +22,6 @@ use App\Http\Controllers\ApiController;
 |
 */
 
-/* Route::get('/', [ApiController::class, 'fetchData']); */
-
-/* Route::resource('/meals', [HomeController::class, 'index'])->name('home'); */
-/* Route::get('/', [MealController::class, 'index'])->name('home'); */
-
-Route::get('/', [MealController::class, 'index'])->name('home');
-
-
-/* Route::get('/meals/{id}', [MealController::class, 'show'])->name('meal.show'); */
 
 
 
