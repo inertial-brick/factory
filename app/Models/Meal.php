@@ -34,7 +34,6 @@ class Meal extends Model
             'ingredients_meals',
         )->withTimestamps();
     }
-
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(

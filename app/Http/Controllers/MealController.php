@@ -6,6 +6,7 @@ use App\Http\Requests\StoreMealRequest;
 use App\Http\Requests\UpdateMealRequest;
 use App\Http\Resources\MealResource;
 use App\Http\Resources\MealCollection;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Models\Meal;
 use Illuminate\Support\Carbon;
@@ -15,6 +16,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class MealController extends Controller
 {
+
 
     public function index(Request $request)
     {
@@ -26,45 +28,33 @@ class MealController extends Controller
         $query->with($validRelationships);
         $diffTime = $request->input('diff_time');
 
-        $meals = $query->paginate($request->input('per_page', 10));
+        if ($diffTime && is_numeric($diffTime) && $diffTime > 0) {
+            $diffTimeDate = Carbon::createFromTimestamp($diffTime);
 
-        foreach ($meals as $meal) {
-            $createdAt = $meal->created_at;
-            $updatedAt = $meal->updated_at;
-            $deletedAt = $meal->deleted_at;
-            $status = $meal->status;
+            $query->withTrashed()->where(function ($query) use ($diffTimeDate) {
+                $query->where('created_at', '>=', $diffTimeDate);
 
-            if ($diffTime && is_numeric($diffTime) && $diffTime > 0) {
+            });
+            $updatedMealsWithTrashed = $query->get();
 
-                $diffTimeDate = Carbon::createFromTimestamp($diffTime);
-
-                if ($createdAt !== null && $status !== 'created') {
-                    $status = 'created';
-                    $meal->save();
+            foreach ($updatedMealsWithTrashed as $meal) {
+                if ($meal->created_at !== null && $meal->status !== 'created') {
+                    $meal->update(['status' => 'created']);
                 }
-                if ($createdAt !== $updatedAt && $status !== 'modified') {
-                    $status = 'modified';
-                    $meal->save();
+                if ($meal->updated_at !== null && $meal->status !== 'modified') {
+                    $meal->update(['status' => 'modified']);
                 }
-                if ($deletedAt !== null && $status !== 'deleted') {
-                    $status = 'deleted';
-                    $meal->save();
+                if ($meal->deleted_at !== null && $meal->status !== 'deleted') {
+                    $meal->update(['status' => 'deleted']);
                 }
-                /*   if ($createdAt === null && $updatedAt === null && $deletedAt === null && $status !== 'created') {
-                      $meal->update(['status' => 'created']);
-                  } */
-
-                $query->withTrashed()->where(function ($query) use ($diffTimeDate) {
-                    $query->where('created_at', '>=', $diffTimeDate)
-                        ->orWhere('updated_at', '>=', $diffTimeDate)
-                        ->orWhere('deleted_at', '>=', $diffTimeDate);
-                });
-
             }
+
         }
 
+        $meals = $query->paginate($request->input('per_page', 10));
         return new MealCollection($meals);
     }
+
 
     public function show(Request $request, Meal $meal)
     {

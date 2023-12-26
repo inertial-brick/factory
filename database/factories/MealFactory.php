@@ -28,6 +28,7 @@ class MealFactory extends Factory
                 null
             ]),
             'status' => 'created',
+            'created_at' => now()
         ];
     }
     /**
