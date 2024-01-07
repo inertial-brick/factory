@@ -46,14 +46,14 @@ class MealFactory extends Factory
                 $meal->tags()->attach(Tag::all()->random(3));
             })
             ->afterCreating(function (Meal $meal) {
-                MealTranslation::factory()->times(1)->create([
+                MealTranslation::factory()->create([
                     'meal_id' => $meal->id,
                     'locale' => 'en',
                     'title' => $this->faker->sentence(),
                     'description' => $this->faker->sentence(),
                     'status' => 'created',
                 ]);
-                MealTranslation::factory()->times(1)->create([
+                MealTranslation::factory()->create([
                     'meal_id' => $meal->id,
                     'locale' => 'hr',
                     'title' => $this->faker->sentence(),
