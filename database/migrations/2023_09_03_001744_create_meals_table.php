@@ -15,9 +15,9 @@ return new class extends Migration {
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->string('status');
+            /*  $table->string('title');
+             $table->text('description');
+             $table->string('status'); */
             $table->timestamps();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');

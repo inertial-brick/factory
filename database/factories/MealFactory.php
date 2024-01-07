@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Category;
 use App\Models\Ingredient;
 use App\Models\Meal;
+use App\Models\MealTranslation;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,14 +21,15 @@ class MealFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
-            'title' => $this->faker->sentence(),
-            'description' => $this->faker->sentence(),
+            /*  'title' => $this->faker->sentence(),
+             'description' => $this->faker->sentence(), */
             'category_id' => $this->faker->randomElement([
                 Category::inRandomOrder()->first(),
                 null
             ]),
-            'status' => 'created',
+            /*  'status' => 'created', */
             'created_at' => now()
         ];
     }
@@ -42,6 +44,22 @@ class MealFactory extends Factory
             })
             ->afterCreating(function (Meal $meal) {
                 $meal->tags()->attach(Tag::all()->random(3));
+            })
+            ->afterCreating(function (Meal $meal) {
+                MealTranslation::factory()->times(1)->create([
+                    'meal_id' => $meal->id,
+                    'locale' => 'en',
+                    'title' => $this->faker->sentence(),
+                    'description' => $this->faker->sentence(),
+                    'status' => 'created',
+                ]);
+                MealTranslation::factory()->times(1)->create([
+                    'meal_id' => $meal->id,
+                    'locale' => 'hr',
+                    'title' => $this->faker->sentence(),
+                    'description' => $this->faker->sentence(),
+                    'status' => 'napravljeno',
+                ]);
             });
     }
 }
