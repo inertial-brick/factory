@@ -24,7 +24,6 @@ class UpdateMealRequest extends FormRequest
         return [
             'title' => 'sometimes|required|max:255',
             'description' => 'sometimes|required|max:255',
-            'status' => 'sometimes|required|in:created',
         ];
     }
 }
