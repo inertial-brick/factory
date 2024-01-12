@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use App\Http\Requests\StoreMealRequest;
 use App\Http\Requests\UpdateMealRequest;
 use App\Http\Resources\MealResource;
 use App\Http\Resources\MealCollection;
+use ErrorException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Models\Meal;
 use Illuminate\Support\Carbon;
-use Spatie\QueryBuilder\QueryBuilder;
-
 
 
 class MealController extends Controller
 {
-
-
     public function index(Request $request)
     {
         $query = Meal::query();
@@ -28,39 +26,71 @@ class MealController extends Controller
         $query->with($validRelationships);
         $diffTime = $request->input('diff_time');
 
-        if ($diffTime && is_numeric($diffTime) && $diffTime > 0) {
+        if ($diffTime !== null && !is_numeric($diffTime) && $diffTime <= 0) {
+
+            throw new ErrorException("Invalid input in diff_time");
+
+        }
+        if ($diffTime !== null) {
             $diffTimeDate = Carbon::createFromTimestamp($diffTime);
 
-            $query->withTrashed()->where(function ($query) use ($diffTimeDate) {
-                $query->where('created_at', '>=', $diffTimeDate);
-
-            });
-            $updatedMealsWithTrashed = $query->get();
-
-            foreach ($updatedMealsWithTrashed as $meal) {
-                if ($meal->created_at !== null && $meal->status !== 'created') {
-                    $meal->update(['status' => 'created']);
-                }
-                if ($meal->updated_at !== null && $meal->status !== 'modified') {
-                    $meal->update(['status' => 'modified']);
-                }
-                if ($meal->deleted_at !== null && $meal->status !== 'deleted') {
-                    $meal->update(['status' => 'deleted']);
-                }
-            }
+            $query->withTrashed()->where('created_at', '>=', $diffTimeDate);
 
         }
 
         $meals = $query->paginate($request->input('per_page', 10));
+        $locale = $request->input('lang');
+
+        if ($locale) {
+            App::setLocale($locale);
+
+            foreach ($meals as $meal) {
+                $meal->title = $meal->translate($locale)->title;
+                $meal->description = $meal->translate($locale)->description;
+
+                if ($request->has('with') && strpos($requestedRelationships, 'category') !== false && $meal->category) {
+                    $meal->category->title = $meal->category->translate($locale)->title;
+                    $meal->category->slug = $meal->category->translate($locale)->slug;
+                }
+                if (($request->has('with') && strpos($requestedRelationships, 'tags') !== false && count($meal->tags) === 0)) {
+                    foreach ($meal->tags as $tag) {
+                        $tag->title = $tag->translate($locale)->title;
+                        $tag->slug = $tag->translate($locale)->slug;
+                    }
+                }
+                if (($request->has('with') && strpos($requestedRelationships, 'ingredients') !== false && count($meal->ingredients) === 0)) {
+                    foreach ($meal->ingredients as $ingredient) {
+                        $ingredient = $ingredient->translate($locale)->title;
+                        $ingredient = $ingredient->translate($locale)->slug;
+                    }
+                }
+
+            }
+            App::setLocale(config('app.locale'));
+        }
+
+        if ($request->has('diff_time')) {
+            foreach ($meals as $meal) {
+              
+                if ($meal->deleted_at !== null) {
+                    $meal->status = 'deleted';
+                } else if ($meal->updated_at !== null) {
+                    $meal->status = 'modified';
+                } else {
+                    $meal->status = 'created';
+                }
+            }
+        }
+
         return new MealCollection($meals);
     }
-
 
     public function show(Request $request, Meal $meal)
     {
         $meal->load('category', 'tags', 'ingredients');
         return new MealResource($meal);
     }
+
     public function store(StoreMealRequest $request)
     {
         $validated = $request->validated();
@@ -78,6 +108,7 @@ class MealController extends Controller
         $meal->update($validated);
         return new MealResource($meal);
     }
+
     public function destroy(Request $request, Meal $meal)
     {
         $meal->deleted_at = now();
@@ -90,5 +121,4 @@ class MealController extends Controller
         $meal = Meal::withTrashed()->find($id)->restore();
         return "Restored";
     }
-
 }
