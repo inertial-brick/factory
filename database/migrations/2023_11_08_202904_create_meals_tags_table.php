@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('meal_id');
             $table->unsignedBigInteger('tag_id');
             $table->timestamps();
-
             $table->foreign('meal_id')->references('id')->on('meals');
             $table->foreign('tag_id')->references('id')->on('tags');
         });

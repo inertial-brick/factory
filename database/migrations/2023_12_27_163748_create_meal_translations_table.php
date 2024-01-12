@@ -16,7 +16,6 @@ return new class extends Migration {
             $table->string('locale')->index();
             $table->string('title');
             $table->text('description');
-            $table->string('status');
             $table->unique(['meal_id', 'locale']);
         });
     }
