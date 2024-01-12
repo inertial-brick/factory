@@ -21,9 +21,9 @@ class Meal extends Model implements TranslatableContract
     protected $fillable = [
         'title',
         'description',
-        'status'
+
     ];
-    public $translatedAttributes = ['title', 'description', 'status'];
+    public $translatedAttributes = ['title', 'description'];
 
     public function category(): BelongsTo
     {
@@ -45,8 +45,5 @@ class Meal extends Model implements TranslatableContract
         )->withTimestamps();
     }
 
-    /*  public function translations()
-     {
-         return $this->hasMany(MealTranslation::class, 'meal_id');
-     } */
+
 }
