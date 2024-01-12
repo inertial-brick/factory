@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\CategoryTranslation;
 use App\Models\Meal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,8 +20,27 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->randomElement(['Predjela', 'Glavna jela', 'Prilozi', 'Deserti', 'Pileće predjelo', 'Riba', 'Povrće iz rerne', 'Pire krumpir', 'Čokoladna torta', 'Juha', 'Salata', 'Špagete', 'Piletina sa povrćem', 'Tiramisu', 'Pizza', 'Kuhano povrće', 'Knedle sa šljivama', 'Losos', 'Cheesecake']),
-            'slug' => $this->faker->word(),
+            'created_at' => now()
         ];
     }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Category $category) {
+
+            CategoryTranslation::factory()->create([
+                'category_id' => $category->id,
+                'locale' => 'en',
+                'title' => $this->faker->sentence(),
+                'slug' => $this->faker->sentence(),
+            ]);
+            CategoryTranslation::factory()->create([
+                'category_id' => $category->id,
+                'locale' => 'hr',
+                'title' => $this->faker->sentence(),
+                'slug' => $this->faker->sentence(),
+            ]);
+        });
+    }
+
 }

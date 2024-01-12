@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Meal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\mealTranslation>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CategoryTranslation>
  */
-class MealTranslationFactory extends Factory
+class CategoryTranslationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,16 +16,10 @@ class MealTranslationFactory extends Factory
      */
     public function definition(): array
     {
-        $meals = Meal::pluck('id')->all();
-
         return [
             'title' => $this->faker->sentence(),
-            'description' => $this->faker->sentence(),
+            'slug' => $this->faker->sentence(),
             'locale' => $this->faker->randomElement(['en', 'hr']),
         ];
     }
-
 }
-
-
-

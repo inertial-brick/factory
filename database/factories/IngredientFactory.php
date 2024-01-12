@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Ingredient;
+use App\Models\IngredientTranslation;
 use App\Models\Meal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +20,24 @@ class IngredientFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->word(),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Ingredient $ingredient) {
+            IngredientTranslation::factory()->create([
+                'ingredient_id' => $ingredient->id,
+                'locale' => 'en',
+                'title' => $this->faker->sentence(),
+                'slug' => $this->faker->sentence(),
+            ]);
+            IngredientTranslation::factory()->create([
+                'ingredient_id' => $ingredient->id,
+                'locale' => 'hr',
+                'title' => $this->faker->sentence(),
+                'slug' => $this->faker->sentence(),
+            ]);
+        });
     }
 }

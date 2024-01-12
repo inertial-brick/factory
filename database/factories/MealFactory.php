@@ -23,13 +23,10 @@ class MealFactory extends Factory
     {
 
         return [
-            /*  'title' => $this->faker->sentence(),
-             'description' => $this->faker->sentence(), */
             'category_id' => $this->faker->randomElement([
                 Category::inRandomOrder()->first(),
                 null
             ]),
-            /*  'status' => 'created', */
             'created_at' => now()
         ];
     }
@@ -51,14 +48,12 @@ class MealFactory extends Factory
                     'locale' => 'en',
                     'title' => $this->faker->sentence(),
                     'description' => $this->faker->sentence(),
-                    'status' => 'created',
                 ]);
                 MealTranslation::factory()->create([
                     'meal_id' => $meal->id,
                     'locale' => 'hr',
                     'title' => $this->faker->sentence(),
                     'description' => $this->faker->sentence(),
-                    'status' => 'napravljeno',
                 ]);
             });
     }

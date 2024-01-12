@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Tag;
+use App\Models\TagTranslation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +19,24 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->word(),
-            'slug' => $this->faker->word(),
+           
         ];
+    }
+    public function configure()
+    {
+        return $this->afterCreating(function (Tag $tag) {
+            TagTranslation::factory()->create([
+                'tag_id' => $tag->id,
+                'locale' => 'en',
+                'title' => $this->faker->sentence(),
+                'slug' => $this->faker->sentence(),
+            ]);
+            TagTranslation::factory()->create([
+                'tag_id' => $tag->id,
+                'locale' => 'hr',
+                'title' => $this->faker->sentence(),
+                'slug' => $this->faker->sentence(),
+            ]);
+        });
     }
 }
