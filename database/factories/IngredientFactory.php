@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Ingredient;
 use App\Models\IngredientTranslation;
-use App\Models\Meal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

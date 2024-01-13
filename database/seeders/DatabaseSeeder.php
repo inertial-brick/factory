@@ -19,20 +19,5 @@ class DatabaseSeeder extends Seeder
         Ingredient::factory(5)->create();
         Tag::factory(5)->create();
         Meal::factory(10)->create();
-        /*   MealTranslation::factory(5)->create(); */
-        /*
-
-         */
-        /* */
-
-        /*  Language::create([
-             "language" => "hr"
-         ]);
-         Language::create([
-             "language" => "en"
-         ]);
-         Language::create([
-             "language" => "fr"
-         ]); */
     }
 }
