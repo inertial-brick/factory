@@ -27,16 +27,10 @@ class MealController extends Controller
         $query->with($validRelationships);
         $diffTime = $request->input('diff_time');
 
-        /*  if ($diffTime !== null && !is_numeric($diffTime) && $diffTime <= 0) {
-
-             throw new ErrorException("Invalid input in diff_time");
-
-         } */
         if ($diffTime !== null) {
             $diffTimeDate = Carbon::createFromTimestamp($diffTime);
 
             $query->withTrashed()->where('created_at', '>=', $diffTimeDate);
-
         }
 
         $meals = $query->paginate($request->input('per_page', 10));
