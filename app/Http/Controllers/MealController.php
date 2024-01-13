@@ -8,7 +8,6 @@ use App\Http\Requests\StoreMealRequest;
 use App\Http\Requests\UpdateMealRequest;
 use App\Http\Resources\MealResource;
 use App\Http\Resources\MealCollection;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Models\Meal;
 use Illuminate\Support\Carbon;
@@ -23,9 +22,9 @@ class MealController extends Controller
         $allowedRelationships = ['category', 'tags', 'ingredients'];
         $requestedRelationships = $request->input('with');
         $validRelationships = array_intersect($allowedRelationships, explode(',', $requestedRelationships));
-
         $query->with($validRelationships);
         $diffTime = $request->input('diff_time');
+
 
         if ($diffTime !== null) {
             $diffTimeDate = Carbon::createFromTimestamp($diffTime);
@@ -78,8 +77,8 @@ class MealController extends Controller
         }
 
         return new MealCollection($meals);
-    }
 
+    }
     public function show(Request $request, Meal $meal)
     {
         $meal->load('category', 'tags', 'ingredients');
