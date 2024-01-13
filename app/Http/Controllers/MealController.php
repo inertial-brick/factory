@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App;
+use App\Http\Requests\MealIndexRequest;
 use App\Http\Requests\StoreMealRequest;
 use App\Http\Requests\UpdateMealRequest;
 use App\Http\Resources\MealResource;
 use App\Http\Resources\MealCollection;
-use ErrorException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Models\Meal;
@@ -16,8 +16,9 @@ use Illuminate\Support\Carbon;
 
 class MealController extends Controller
 {
-    public function index(Request $request)
+    public function index(MealIndexRequest $request)
     {
+
         $query = Meal::query();
         $allowedRelationships = ['category', 'tags', 'ingredients'];
         $requestedRelationships = $request->input('with');
@@ -26,11 +27,11 @@ class MealController extends Controller
         $query->with($validRelationships);
         $diffTime = $request->input('diff_time');
 
-        if ($diffTime !== null && !is_numeric($diffTime) && $diffTime <= 0) {
+        /*  if ($diffTime !== null && !is_numeric($diffTime) && $diffTime <= 0) {
 
-            throw new ErrorException("Invalid input in diff_time");
+             throw new ErrorException("Invalid input in diff_time");
 
-        }
+         } */
         if ($diffTime !== null) {
             $diffTimeDate = Carbon::createFromTimestamp($diffTime);
 
@@ -71,7 +72,7 @@ class MealController extends Controller
 
         if ($request->has('diff_time')) {
             foreach ($meals as $meal) {
-              
+
                 if ($meal->deleted_at !== null) {
                     $meal->status = 'deleted';
                 } else if ($meal->updated_at !== null) {
